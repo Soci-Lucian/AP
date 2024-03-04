@@ -33,8 +33,8 @@ public class Main {
         String numbers = "k-reductable numbers: ";
 
         for(i=a;i<=b;i++){
-            n=i;
-            while(n>k && n>9){
+            n=i; // salveaza valoarea pentru a putea fi modificata
+            while(n>k && n>9){ // calculeaza suma
                 int red=n;
                 int sum=0;
                 while(red>0){
@@ -53,7 +53,7 @@ public class Main {
         System.out.println(numbers);
 
         long endTime = System.nanoTime();
-        long executionTime = (endTime - startTime) / 1000000;
+        long executionTime = (endTime - startTime) / 1000000; // calculeaza timpul in ms
 
         System.out.println("running time of the application: " + executionTime + "ms");
     }
