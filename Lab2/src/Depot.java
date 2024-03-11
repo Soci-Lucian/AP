@@ -1,5 +1,6 @@
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Depot {
     private String location;
@@ -36,5 +37,19 @@ public class Depot {
                 "location='" + location + '\'' +
                 ", masini=" + masini +
                 '}';
+    }
+
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null || getClass() != obj.getClass())
+            return false;
+        Depot depot = (Depot) obj;
+        return Objects.equals(location, depot.location);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(location, masini);
     }
 }

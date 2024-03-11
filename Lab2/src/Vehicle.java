@@ -1,4 +1,6 @@
-public class Vehicle {
+import java.util.Objects;
+
+abstract class Vehicle {
 
     private String marca;
     private String culoare;
@@ -42,5 +44,18 @@ public class Vehicle {
                 ", culoare='" + culoare + '\'' +
                 ", an=" + an +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Vehicle vehicle = (Vehicle) o;
+        return an == vehicle.an && Objects.equals(marca, vehicle.marca) && Objects.equals(culoare, vehicle.culoare);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(marca, culoare, an);
     }
 }

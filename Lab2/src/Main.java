@@ -1,8 +1,9 @@
 public class Main {
     public static void main(String[] args) {
         Client client = new Client("Soci Lucian", ClientType.PREMIUM);
-        Vehicle masina1 = new Vehicle("Tesla", "Negru", 2019);
-        Vehicle masina2 = new Vehicle("Dacia", "Bostan", 2007);
+       Vehicle masina1 = new Truck("Tesla", "Negru", 2019, 70);
+       Vehicle masina2 = new Truck("Dacia", "Rosu", 2007, 50);
+       Vehicle drona1 = new Drone("Tesla", "Alb", 2022, 2);
         Depot deposit1 = new Depot("Iasi");
 
         deposit1.addVehicle(masina1);

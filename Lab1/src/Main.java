@@ -23,11 +23,10 @@ public class Main {
 
         System.out.println( "Willy-nilly, this semester I will learn " + languages[result]);
 
-        // Homework:
-
-        int a=Integer.parseInt(args[0]);
-        int b=Integer.parseInt(args[1]);
-        int k=Integer.parseInt(args[2]);
+        // Homework
+        int a=Integer.getInteger(args[0]);
+        int b=Integer.getInteger(args[1]);
+        int k=Integer.getInteger(args[2]);
         int i;
 
         String numbers = "k-reductable numbers: ";
