@@ -1,6 +1,9 @@
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class Trip {
     private String city;
@@ -55,4 +58,33 @@ public class Trip {
                 ", attractions=" + attractions +
                 '}';
     }
+
+    public void displayVisitableNonPayableLocations(LocalDate date) {
+        List<Attraction> visitableNonPayableLocations = new ArrayList<>();
+
+        // Filter visitable attractions that are not payable
+        for (Attraction attraction : attractions) {
+            if (attraction instanceof Visitable && !attraction.isPayable()) {
+                visitableNonPayableLocations.add(attraction);
+            }
+        }
+
+        // Sort the attractions by opening hours for the given date
+        Collections.sort(visitableNonPayableLocations, new Comparator<Attraction>() {
+            @Override
+            public int compare(Attraction a1, Attraction a2) {
+                LocalTime openingHour1 = a1.getOpeningHour(date);
+                LocalTime openingHour2 = a2.getOpeningHour(date);
+                return openingHour1.compareTo(openingHour2);
+            }
+        });
+
+        // Display the locations
+        System.out.println("Visitable Non-Payable Locations Sorted by Opening Hour on " + date + ":");
+        for (Attraction attraction : visitableNonPayableLocations) {
+            LocalTime openingHour = attraction.getOpeningHour(date);
+            System.out.println("- " + attraction.getName() + " (Opens at " + openingHour + ")");
+        }
+    }
+
 }

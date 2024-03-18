@@ -13,4 +13,8 @@ public interface Visitable {
             return null;
         }
     }
+
+    default boolean isPayable() {
+        return false; // By default, attractions are not payable
+    }
 }

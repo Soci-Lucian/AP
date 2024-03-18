@@ -24,4 +24,8 @@ public class Concert extends Attraction implements Visitable, Payable{
     public void setTicketPrice(double ticketPrice) {
         this.ticketPrice = ticketPrice;
     }
+
+    public boolean isPayable() {
+        return true; // Concerts are payable
+    }
 }

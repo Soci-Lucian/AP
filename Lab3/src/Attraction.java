@@ -1,4 +1,4 @@
-public abstract class Attraction implements Comparable<Attraction> {
+public abstract class Attraction implements Comparable<Attraction>, Visitable {
     private String name;
 
     public Attraction(String name) {
@@ -26,4 +26,6 @@ public abstract class Attraction implements Comparable<Attraction> {
             return this.name.compareTo(other.name);
         return 0;
     }
+
+
 }
