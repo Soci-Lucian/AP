@@ -1,10 +1,19 @@
 package org.example;
 
-public class Driver extends Person{
+import java.util.List;
 
-    public Driver(String name, String destination, int age) {
-        super(name, destination, age);
+public class Driver extends Person{
+    private List<String> destinations;
+
+    public Driver(String name, List<String> destinations, int age) {
+        super(name, destinations.get(0), age); // Assuming the first destination is the primary destination
+        this.destinations = destinations;
     }
+
+    public List<String> getDestinations() {
+        return destinations;
+    }
+
 
 
 }

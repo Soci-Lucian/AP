@@ -1,21 +1,22 @@
 package org.example;
 
+import com.github.javafaker.Faker;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) {
-        List<String> names = Arrays.asList("Gabriel", "Enirico", "Robert", "Albert", "Lucian", "Marcelin", "Marius", "Andrei", "Gabriela", "Roberta");
-        List<Integer> ages = Arrays.asList(26, 31, 23, 41, 36, 29, 34, 46, 19, 29);
-        List<String> destinations = Arrays.asList("Iasi", "Bucuresti", "Bacau", "Brasov", "Suceava");
+        Faker faker = new Faker();
 
-
-        List<Person> persons = generatePersons(names, ages, destinations); // Generate a random group of persons
+        List<Person> persons = generatePersons(faker);
 
         // Put drivers in a LinkedList and sort
         List<Driver> drivers = persons.stream()
                 .filter(person -> person instanceof Driver)
-                .map(person -> (Driver) person).sorted(Comparator.comparingInt(driver -> driver.age)).collect(Collectors.toCollection(LinkedList::new));
+                .map(person -> (Driver) person)
+                .sorted(Comparator.comparingInt(driver -> driver.age))
+                .collect(Collectors.toCollection(LinkedList::new));
 
         // Create a custom comparator for sorting passengers by name
         Comparator<Passenger> passengerComparator = Comparator.comparing(passenger -> passenger.name);
@@ -29,7 +30,7 @@ public class Main {
         // Print drivers sorted by age
         System.out.println("Drivers (sorted by age):");
         for (Driver driver : drivers) {
-            System.out.println(driver.name + " - Age: " + driver.age + " - Destination: " + driver.destination);
+            System.out.println(driver.name + " - Age: " + driver.age + " - Destination: " + driver.getDestinations());
         }
 
         // Print passengers sorted by name
@@ -37,26 +38,55 @@ public class Main {
         for (Passenger passenger : sortedPassengers) {
             System.out.println(passenger.name + " - Age: " + passenger.age + " - Destination: " + passenger.destination);
         }
+
+        CarPoolingProblem carPoolingProblem = new CarPoolingProblem(persons);
+
+        Map<Person, Person> matchedPassengersToDrivers = carPoolingProblem.matchPassengersToDrivers();
+
+        // Print the matched passengers and drivers
+        System.out.println("\nMatched Passengers to Drivers:");
+        for (Map.Entry<Person, Person> entry : matchedPassengersToDrivers.entrySet()) {
+            Person driver = entry.getKey();
+            Person passenger = entry.getValue();
+            System.out.println("Driver: " + driver.getName() + " - Destination: " + driver.getDestination() +
+                    " | Passenger: " + passenger.getName() + " - Destination: " + passenger.getDestination());
+        }
     }
 
-    // Method to generate a random group of persons with randomly assigned destinations
-    private static List<Person> generatePersons(List<String> names, List<Integer> ages, List<String> destinations) {
-        if (names.size() != ages.size() || destinations.isEmpty()) {
-            throw new IllegalArgumentException("Invalid input lists");
-        }
 
+    // Method to generate a random group of persons with randomly assigned destinations
+    private static List<Person> generatePersons(Faker faker) {
         List<Person> persons = new ArrayList<>();
         Random random = new Random();
 
-        for (int i = 0; i < names.size(); i++) {
-            String name = names.get(i);
-            int age = ages.get(i);
-            String destination = destinations.get(random.nextInt(destinations.size()));
+        // Create a list of possible destinations
+        List<String> possibleDestinations = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            possibleDestinations.add(faker.address().city());
+        }
+
+        for (int i = 0; i < 10; i++) { // Assuming 10 persons to generate
+            String name = faker.name().fullName();
+            int age = faker.number().numberBetween(18, 60); // Assuming age between 18 and 60
+
+            // Randomly select a destination from the list of possible destinations
+            String destination = possibleDestinations.get(random.nextInt(10));
 
             boolean isDriver = random.nextBoolean();
 
             if (isDriver) {
-                persons.add(new Driver(name, destination, age));
+                List<String> destinations = new ArrayList<>();
+                destinations.add(destination);
+
+                // Add 2-3 random destinations for the driver
+                for (int j = 0; j < random.nextInt(2) + 2; j++) {
+                    String intermediateDestination = possibleDestinations.get(random.nextInt(10));
+                    if (!destinations.contains(intermediateDestination)) {
+                        destinations.add(intermediateDestination);
+                    }
+                }
+
+                persons.add(new Driver(name, destinations, age));
             } else {
                 persons.add(new Passenger(name, destination, age));
             }
@@ -64,4 +94,5 @@ public class Main {
 
         return persons;
     }
+
 }

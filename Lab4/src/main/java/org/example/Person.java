@@ -10,4 +10,12 @@ public class Person {
         this.destination = destination;
         this.age = age;
     }
+
+    public String getDestination() {
+        return destination;
+    }
+
+    public String getName() {
+        return name;
+    }
 }
