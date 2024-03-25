@@ -41,6 +41,14 @@ public class Main {
 
         CarPoolingProblem carPoolingProblem = new CarPoolingProblem(persons);
 
+        // Compute a list of all destinations that the drivers pass through
+        List<String> allDestinationsForDrivers = carPoolingProblem.getAllDestinationsForDrivers();
+        System.out.println("\nAll Destinations for Drivers: " + allDestinationsForDrivers);
+
+        // Compute a map of destinations and people who want to go there
+        Map<String, List<Person>> destinationMap = carPoolingProblem.getDestinationMap();
+        System.out.println("\nDestination Map: " + destinationMap);
+
         Map<Person, Person> matchedPassengersToDrivers = carPoolingProblem.matchPassengersToDrivers();
 
         // Print the matched passengers and drivers

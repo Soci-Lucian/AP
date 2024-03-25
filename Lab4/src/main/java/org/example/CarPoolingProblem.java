@@ -10,6 +10,24 @@ public class CarPoolingProblem {
         this.persons = persons;
     }
 
+    public List<String> getAllDestinationsForDrivers() {
+        return persons.stream()
+                .filter(person -> person instanceof Driver)
+                .flatMap(driver -> ((Driver) driver).getDestinations().stream())
+                .distinct()
+                .collect(Collectors.toList());
+    }
+
+    public Map<String, List<Person>> getDestinationMap() {
+        Map<String, List<Person>> destinationMap = new HashMap<>();
+        for (Person person : persons) {
+            String destination = person.getDestination();
+            destinationMap.putIfAbsent(destination, new ArrayList<>());
+            destinationMap.get(destination).add(person);
+        }
+        return destinationMap;
+    }
+
     // Method to match passengers to drivers with common destination
     public Map<Person, Person> matchPassengersToDrivers() {
         Map<Person, Person> matchedPassengersToDrivers = new HashMap<>();
