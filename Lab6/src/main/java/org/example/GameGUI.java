@@ -20,7 +20,7 @@ public class GameGUI extends JFrame {
         JTextField gridWidthField = new JTextField(String.valueOf(gridWidth), 5);
         JLabel gridHeightLabel = new JLabel();
         JTextField gridHeightField = new JTextField(String.valueOf(gridHeight), 5);
-        JButton newGameButton = new JButton("New Game");
+        JButton newGameButton = new JButton("Create");
         configPanel.add(gridWidthLabel);
         configPanel.add(gridWidthField);
         configPanel.add(gridHeightLabel);
