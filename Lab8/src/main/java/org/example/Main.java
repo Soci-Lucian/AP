@@ -22,7 +22,7 @@ public class Main {
             BookDAO bookDAO = new BookDAO();
 
             // Add a book
-            Book bookToAdd = new Book("Sample Book", Arrays.asList("Author1", "Author2"), "English", LocalDate.now(), 200);
+            Book bookToAdd = new Book("Sample Book 2", Arrays.asList("Author1", "Author2"), "English2", LocalDate.now(), 200);
             bookDAO.addBook(bookToAdd);
 
             // Get all books
